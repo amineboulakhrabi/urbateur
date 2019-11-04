@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Avatar, Button, Tab, Tabs, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {FusePageSimple, FuseAnimate} from '@fuse';
+import {useSelector} from 'react-redux';
 import TimelineTab from './tabs/TimelineTab';
 import PhotosVideosTab from './tabs/PhotosVideosTab';
 import AboutTab from './tabs/AboutTab';
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 function Profil()
 {
+    const user = useSelector(({auth}) => auth.user);
     const classes = useStyles();
     const [selectedTab, setSelectedTab] = useState(0);
 
@@ -37,10 +39,12 @@ function Profil()
                 <div className="p-24 flex flex-1 flex-col items-center justify-center md:flex-row md:items-end">
                     <div className="flex flex-1 flex-col items-center justify-center md:flex-row md:items-center md:justify-start">
                         <FuseAnimate animation="transition.expandIn" delay={300}>
-                            <Avatar className="w-96 h-96" src="assets/images/avatars/Velazquez.jpg"/>
+                            <Avatar className="w-96 h-96" src={user.data.photoURL}/>
                         </FuseAnimate>
                         <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                            <Typography className="md:ml-24" variant="h4" color="inherit">John Doe</Typography>
+                            <Typography className="md:ml-24" variant="h4" color="inherit">
+                              {user.data.nom+ ' '+user.data.prenom}
+                                </Typography>
                         </FuseAnimate>
                     </div>
 

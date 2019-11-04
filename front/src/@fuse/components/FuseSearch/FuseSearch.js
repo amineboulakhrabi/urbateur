@@ -389,7 +389,7 @@ function FuseSearch(props)
             return (
                 <div className={clsx(classes.root, "flex", props.className)}>
 
-                    <Tooltip title="Click to search" placement="bottom">
+                    <Tooltip title="Search for a friend" placement="bottom">
                         <div onClick={showSearch}>
                             {props.trigger}
                         </div>

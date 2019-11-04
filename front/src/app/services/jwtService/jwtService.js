@@ -13,8 +13,18 @@ class jwtService extends FuseUtils.EventEmitter {
     setInterceptors = () => {
         axios.interceptors.response.use(response => {
             return response;
+        }, err => {
+            return new Promise((resolve, reject) => {
+                if ( err.response.status === 401 && err.config && !err.config.__isRetryRequest )
+                {
+                    // if you ever get an unauthorized response, logout the user
+                    this.emit('onAutoLogout', 'Invalid access_token');
+                    this.setSession(null);
+                }
+                throw err;
+            });
         });
-    };
+    }
 
     handleAuthentication = () => {
 
@@ -56,6 +66,7 @@ class jwtService extends FuseUtils.EventEmitter {
                 data: JSON.stringify(data)
             })
             .then(function (reponse) {
+                
                 localStorage.setItem('jwt_access_token', reponse.data.token);
                 //On traite la suite une fois la réponse obtenue 
                 
@@ -82,20 +93,25 @@ class jwtService extends FuseUtils.EventEmitter {
                     password
                 })
             })
-            .then(function (reponse) {
-                localStorage.setItem('jwt_access_token', reponse.data.token);
+            .then(response => {
+                console.log(response);
+                if(response.data.user)
+                {
+                    this.setSession(response.data.access_token);
+                    resolve(response.data.user);
+                }
+                else
+                {
+                    reject("Error");
+                }
             })
-            .catch(function (erreur) {
-                //On traite ici les erreurs éventuellement survenues
-                console.log(erreur);
-            });
             
         });
     };
 
     signInWithToken = () => {
         return new Promise((resolve, reject) => {
-            axios.get('/api/auth/access-token', {
+           /* axios.get('/api/auth/access-token', {
                 data: {
                     access_token: this.getAccessToken()
                 }
@@ -115,8 +131,34 @@ class jwtService extends FuseUtils.EventEmitter {
                 .catch(error => {
                     this.logout();
                     reject('Failed to login with token.');
+                });*/
+                axios({
+                    method: 'post',
+                    headers: {
+                      'Content-type': 'application/json',
+                      "charset":"UTF-8"
+                    },
+                    url: 'http://localhost:3005/signInWithToken',
+                    data: {
+                        access_token:this.getAccessToken()
+                    }
+                }).then(response => {
+                    if ( response.data.user )
+                    {
+                        this.setSession(response.data.access_token);
+                        resolve(response.data.user);
+                    }
+                    else
+                    {
+                        this.logout();
+                        reject('Failed to login with token.');
+                    }
+                })
+                .catch(error => {
+                    this.logout();
+                    reject('Failed to login with token.');
                 });
-        });
+            });
     };
 
     updateUserData = (user) => {
@@ -124,22 +166,29 @@ class jwtService extends FuseUtils.EventEmitter {
             user: user
         });
     };
+     
+    setAccessToken = access_token => {
+        localStorage.setItem('jwt_access_token', access_token);
+        localStorage.setItem("mytime", Date.now());
+    };
 
     setSession = access_token => {
         if ( access_token )
         {
-            localStorage.setItem('jwt_access_token', access_token);
+            this.setAccessToken(access_token);
+          //  localStorage.setItem('jwt_access_token', access_token);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
         }
         else
         {
-            localStorage.removeItem('jwt_access_token');
+            //localStorage.removeItem('jwt_access_token');
             delete axios.defaults.headers.common['Authorization'];
         }
     };
 
     logout = () => {
-        this.setSession(null);
+        //this.setSession(null);
+        localStorage.removeItem('jwt_access_token');
     };
 
     /*isAuthTokenValid = access_token => {
@@ -179,6 +228,7 @@ class jwtService extends FuseUtils.EventEmitter {
     };
 
     getAccessToken = () => {
+        //localStorage.setItem("mytime", Date.now());
         return window.localStorage.getItem('jwt_access_token');
      };
 

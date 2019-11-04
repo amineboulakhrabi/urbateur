@@ -1,13 +1,19 @@
-import { Entity,  Column, TableInheritance, BaseEntity, PrimaryColumn } from "typeorm";
+import { Entity,  Column,  BaseEntity, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Post extends BaseEntity{
     @PrimaryColumn()
     id:String;
     @Column()
-    type:String;
+    post:String;
     @Column()
-    nom:String;
+    idPoster:String;
+    @Column()
+    nomPoster:String;
+    @Column()
+    time:Date;
+    @Column()
+    avatar:String;
     
 
 }

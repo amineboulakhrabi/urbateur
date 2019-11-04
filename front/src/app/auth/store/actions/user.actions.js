@@ -3,15 +3,17 @@ import {setDefaultSettings, setInitialSettings} from 'app/store/actions/fuse';
 import _ from '@lodash';
 import store from 'app/store';
 import * as Actions from 'app/store/actions';
-//import firebase from 'firebase/app';
-//import firebaseService from 'app/services/firebaseService';
-//import auth0Service from 'app/services/auth0Service';
+
 import jwtService from 'app/services/jwtService';
 
 export const SET_USER_DATA = '[USER] SET DATA';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
 export const USER_LOGGED_OUT = '[USER] LOGGED OUT';
 
+export const SET_ETUDIANT_ROLE = 'SET_ETUDIANT_ROLE';
+export const SET_ARCHITECTE_ROLE = 'SET_ARCHITECTE_ROLE';
+export const SET_ARTISANT_ROLE = 'SET_ARTISANT_ROLE';
+export const SET_ENTREPRISE_ROLE = 'SET_ENTREPRISE_ROLE';
 /**
  * Set user data from Auth0 token data
  */
@@ -89,9 +91,12 @@ export function createUserSettingsFirebase(authUser)
 /**
  * Set User Data
  */
-export function setUserData(user)
-{
-    return (dispatch) => {
+export const setUserData = (user) => 
+{    
+    return function(dispatch, getState){
+
+        
+    
 
         /*
         Set User Settings

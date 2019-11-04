@@ -175,15 +175,15 @@ mock.onPost('/api/auth/register').reply((request) => {
     {
         const newUser = {
             uuid    : FuseUtils.generateGUID(),
-            from    : 'custom-db',
+           // from    : 'custom-db',
             password: password,
             role    : "admin",
             data    : {
                 
                 photoURL   : 'assets/images/avatars/Abbott.jpg',
                 email      : email,
-                settings   : {},
-                shortcuts  : []
+               // settings   : {},
+                //shortcuts  : []
             }
         };
 

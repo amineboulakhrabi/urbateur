@@ -24,13 +24,33 @@ import {Link} from 'react-router-dom';
 
 function TimelineTab()
 {
+
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        axios.get('/api/profile/timeline').then(res => {
+        /*axios.get('http://localhost:3005/afficherPost').then(res => {
             setData(res.data);
+        });*/
+        axios({
+            method: 'post',
+            headers: {
+              'Content-type': 'application/json',
+              "charset":"UTF-8"
+            },
+            url: 'http://localhost:3005/afficherPost',
+            data: window.localStorage.getItem('jwt_access_token')
+        })
+        .then(function (reponse) {
+            setData(reponse[0].data); 
+            //On traite la suite une fois la réponse obtenue 
+            
+        })
+        .catch(function (erreur) {
+            //On traite ici les erreurs éventuellement survenues
+            
         });
     }, []);
+
 
     if ( !data )
     {
@@ -63,12 +83,7 @@ function TimelineTab()
                                     <IconButton aria-label="Add photo">
                                         <Icon>photo</Icon>
                                     </IconButton>
-                                    <IconButton aria-label="Mention somebody">
-                                        <Icon>person</Icon>
-                                    </IconButton>
-                                    <IconButton aria-label="Add location">
-                                        <Icon>location_on</Icon>
-                                    </IconButton>
+                                    
                                 </div>
 
                                 <div className="p-8">
@@ -83,11 +98,11 @@ function TimelineTab()
                         <Divider className="my-32"/>
                     </div>
 
-                    {data.posts.map((post) => (
-                            <Card key={post.id} className="mb-32 overflow-hidden">
+                    {data.map((post) => (
+                            <Card key={post.Idpost} className="mb-32 overflow-hidden">
                                 <CardHeader
                                     avatar={
-                                        <Avatar aria-label="Recipe" src={post.user.avatar}/>
+                                        <Avatar aria-label="Recipe" src={post.avatar}/>
                                     }
                                     action={
                                         <IconButton aria-label="more">
@@ -97,95 +112,33 @@ function TimelineTab()
                                     title={(
                                         <span>
                                                 <Typography className="inline font-medium mr-4" color="primary" paragraph={false}>
-                                                    {post.user.name}
+                                                    {post.name}
                                                 </Typography>
-                                            {post.type === 'post' && "posted on your timeline"}
-                                            {post.type === 'something' && "shared something with you"}
-                                            {post.type === 'video' && "shared a video with you"}
-                                            {post.type === 'article' && "shared an article with you"}
                                             </span>
                                     )}
                                     subheader={post.time}
                                 />
 
                                 <CardContent className="py-0">
-                                    {post.message && (
+                                    {post.Post && (
                                         <Typography component="p" className="mb-16">
-                                            {post.message}
+                                            {post.Post}
                                         </Typography>
                                     )}
 
-                                    {post.media && (
-                                        <img
-                                            src={post.media.preview}
-                                            alt="post"
-                                        />
-                                    )}
-
-                                    {post.article && (
-                                        <div className="border-1">
-                                            <img className="w-full border-b-1" src={post.article.media.preview} alt="article"/>
-                                            <div className="p-16">
-                                                <Typography variant="subtitle1">{post.article.title}</Typography>
-                                                <Typography variant="caption">{post.article.subtitle}</Typography>
-                                                <Typography className="mt-16">{post.article.excerpt}</Typography>
-                                            </div>
-                                        </div>
-                                    )}
-                                </CardContent>
+                                 </CardContent>
 
                                 <CardActions disableSpacing>
                                     <Button size="small" aria-label="Add to favorites">
                                         <Icon className="text-16 mr-8" color="action">favorite</Icon>
-                                        <Typography className="normal-case">Like</Typography>
-                                        <Typography className="normal-case ml-4">({post.like})</Typography>
-                                    </Button>
-                                    <Button aria-label="Share">
-                                        <Icon className="text-16 mr-8" color="action">share</Icon>
-                                        <Typography className="normal-case">Share</Typography>
-                                        <Typography className="normal-case ml-4">({post.share})</Typography>
+
                                     </Button>
                                 </CardActions>
 
                                 <AppBar className="card-footer flex flex-column p-16" position="static" color="default" elevation={0}>
 
-                                    {post.comments && post.comments.length > 0 && (
-                                        <div className="">
-                                            <div className="flex items-center">
-                                                <Typography>
-                                                    {post.comments.length} comments
-                                                </Typography>
-                                                <Icon className="text-16 ml-4" color="action">keyboard_arrow_down</Icon>
-                                            </div>
-
-                                            <List>
-                                                {post.comments.map((comment) => (
-                                                    <div key={comment.id}>
-                                                        <ListItem className="px-0">
-                                                            <Avatar alt={comment.user.name} src={comment.user.avatar} className="mr-16"/>
-                                                            <ListItemText
-                                                                primary={(
-                                                                    <div>
-                                                                        <Typography className="inline font-medium" color="initial" paragraph={false}>
-                                                                            {comment.user.name}
-                                                                        </Typography>
-                                                                        <Typography className="inline ml-4" variant="caption">
-                                                                            {comment.time}
-                                                                        </Typography>
-                                                                    </div>
-                                                                )}
-                                                                secondary={comment.message}
-                                                            />
-                                                        </ListItem>
-                                                        <div className="flex items-center ml-56 mb-8">
-                                                            <Link to="#" className="mr-8">Reply</Link>
-                                                            <Icon className="text-14 cursor-pointer">flag</Icon>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </List>
-                                        </div>
-                                    )}
+                                    
+                                          
 
                                     <div className="flex flex-auto">
                                         <Avatar src="assets/images/avatars/profile.jpg"/>

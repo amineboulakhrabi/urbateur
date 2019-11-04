@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppBar, Hidden, Toolbar} from '@material-ui/core';
 import {makeStyles, ThemeProvider} from '@material-ui/styles';
-import {FuseSearch, FuseShortcuts} from '@fuse';
+import {FuseSearch/*, FuseShortcuts*/} from '@fuse';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import ChatPanelToggleButton from 'app/fuse-layouts/shared-components/chatPanel/ChatPanelToggleButton';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
@@ -35,9 +35,7 @@ function ToolbarLayout1(props)
                     )}
 
                     <div className="flex flex-1">
-                        <Hidden mdDown>
-                            <FuseShortcuts className="px-16"/>
-                        </Hidden>
+                        
                     </div>
 
                     <div className="flex">

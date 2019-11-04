@@ -20,6 +20,7 @@
       "express": "^4.17.1",
       "helmet": "^3.21.2",
       "jsonwebtoken": "^8.5.1",
+      "mocha": "^6.2.2",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.10",
       "ts-node-dev": "^1.0.0-pre.43",
@@ -27,6 +28,8 @@
       "uuid": "^3.3.3"
    },
    "scripts": {
-      "start": "ts-node src/index.ts"
+      "start": "ts-node src/index.ts",
+      "test": " mocha src/test/*.spec.ts "
+
    }
 }

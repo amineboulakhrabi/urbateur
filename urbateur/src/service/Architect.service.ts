@@ -2,7 +2,7 @@ import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Architect} from "../entity/Architect";
 
-export class ArchitectController {
+export class ArchitectService {
 
     private architectRepository = getRepository(Architect);
 

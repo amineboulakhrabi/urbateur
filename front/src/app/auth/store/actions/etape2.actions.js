@@ -18,8 +18,9 @@ export const submitRegisterEtudiant = ({ nom, prenom, dateNaissance, ecole, pays
             ecole,
             pays
         });
+        jwtService.signInWithToken();
         history.push({
-            pathname: '/'
+            pathname: '/profil'
         });
         dispatch({type : REGISTER_ETUDIANT_SUCCESS});
     }
@@ -36,8 +37,9 @@ export const submitRegisterArtisant = ({ nom, prenom, dateNaissance, pays, activ
             pays,
             activite
         });
+        jwtService.signInWithToken();
         history.push({
-            pathname: '/'
+            pathname: '/profil'
         });
         dispatch({type : REGISTER_ARTISANT_SUCCESS});
     }
@@ -55,6 +57,7 @@ export const submitRegisterEntreprise = ({ ice, adresse, pays, ville,activite, d
             activite,
             dateCreation
         });
+        jwtService.signInWithToken();
         history.push({
             pathname: '/'
         });
@@ -74,11 +77,13 @@ export const submitRegisterArchitecte = ({ nom, prenom, dateNaissance, pays,spec
             pays,
             specialite
         });
+        jwtService.signInWithToken();
         history.push({
-            pathname: '/'
+            pathname: '/profil'
         });
         dispatch({type : REGISTER_ARCHITECTE_SUCCESS});
     }
+
 }
 
         

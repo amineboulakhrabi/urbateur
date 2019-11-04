@@ -5,9 +5,9 @@ const authRoles = {
     admin    : ['admin'],
     entreprise : ['admin', 'entreprise'],
     etudiant : ['admin', 'etudiant'],
-    artisant : ['admin', 'artisant'],
-    architecte : ['admin', 'architecte'],
-    user : ['admin', 'entreprise', 'artisant','etudiant', 'architecte'],
+    artisan : ['admin', 'artisan'],
+    architect : ['admin', 'architect'],
+    user : ['admin', 'entreprise', 'artisan','etudiant', 'architect'],
     onlyGuest: []
 };
 

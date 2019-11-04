@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {FuseUtils} from '@fuse/index';
+import {AccueilConfig} from 'app/main/accueil/AccueilConfig';
 import {appsConfigs} from 'app/main/apps/appsConfigs';
 import {AdminConfig} from 'app/main/admin-interface/AdminConfig';
 import {pagesConfigs} from 'app/main/pages/pagesConfigs';
@@ -20,6 +21,7 @@ const routeConfigs = [
     UserInterfaceConfig,
     AdminConfig,
     ProfilConfig,
+    AccueilConfig,
     ProfilRegisterConfig,
     LogoutConfig,
     LoginConfig,

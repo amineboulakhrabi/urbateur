@@ -7,7 +7,14 @@ const navigationConfig = [
         'type'    : 'group',
         'icon'    : 'apps',
         'children': [
-           
+            
+            {
+                'id'   : 'accueil',
+                'title': 'Accueil',
+                'type' : 'item',
+                'icon' : 'home',
+                'url'  : '/accueil'
+            },
             {
                 'id'   : 'profile',
                 'title': 'Profil',

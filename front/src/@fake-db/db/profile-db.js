@@ -147,6 +147,18 @@ const profileDB = {
                 'type'   : 'something',
                 'like'   : 4,
                 'share'  : 1
+            },
+            {
+                'id'     : '4',
+                'user'   : {
+                    'name'  : 'Carl Henderson',
+                    'avatar': 'assets/images/avatars/carl.jpg'
+                },
+                'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et eleifend ligula. Fusce posuere in sapien ac facilisis. Etiam sit amet justo non felis ornare feugiat. Aenean lorem ex, ultrices sit amet ligula sed...',
+                'time'   : 'June 10, 2015',
+                'type'   : 'something',
+                'like'   : 4,
+                'share'  : 1
             }
         ]
     },
